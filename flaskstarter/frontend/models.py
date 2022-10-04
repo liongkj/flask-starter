@@ -22,7 +22,7 @@ class ContactUs(db.Model):
     received_time = Column(db.DateTime, default=get_current_time)
 
     def __unicode__(self):
-        _str = '%s. %s %s' % (self.id, self.name, self.email)
+        _str = f'{self.id}. {self.name} {self.email}'
         return str(_str)
 
 

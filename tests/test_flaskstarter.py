@@ -14,8 +14,7 @@ def client():
     app.config["TESTING"] = True
     app.testing = True
 
-    client = app.test_client()
-    yield client
+    yield app.test_client()
 
 
 def test_home_page(client):

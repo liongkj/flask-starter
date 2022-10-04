@@ -26,7 +26,7 @@ def initdb():
 
     db.session.add(admin)
 
-    for i in range(1, 2):
+    for _ in range(1, 2):
         user = Users(name='Demo User',
                      email=u'demo@your-mail.com',
                      password=u'demopassword',
@@ -35,7 +35,7 @@ def initdb():
         db.session.add(user)
 
     for i in range(1, 5):
-        _task = MyTaskModel(task="Task Random Number ## " + str(i), users_id=2)
+        _task = MyTaskModel(task=f"Task Random Number ## {str(i)}", users_id=2)
 
         db.session.add(_task)
 

@@ -23,7 +23,7 @@ class MyTaskModel(db.Model):
     user = db.relationship("Users", uselist=False, backref="mytask_model")
 
     def __unicode__(self):
-        _str = 'ID: %s, Post: %s' % (self.id, self.task)
+        _str = f'ID: {self.id}, Post: {self.task}'
         return str(_str)
 
 

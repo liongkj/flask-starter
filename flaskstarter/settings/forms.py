@@ -26,7 +26,7 @@ class PasswordForm(FlaskForm):
     password_again = PasswordField('Password again', [InputRequired(), Length(PASSWORD_LEN_MIN, PASSWORD_LEN_MAX), EqualTo('new_password')])
     submit = SubmitField(u'Update')
 
-    def validate_password(form, field):
+    def validate_password(self, field):
         user = Users.get_by_id(current_user.id)
         if not user.check_password(field.data):
             raise ValidationError("Password is wrong")

@@ -40,9 +40,11 @@ class DenormalizedText(Mutable, types.TypeDecorator):
         return value
 
     def process_result_value(self, value, dialect):
-        if not value:
-            return set()
-        return set(self.coerce(item) for item in value.split(self.separator))
+        return (
+            {self.coerce(item) for item in value.split(self.separator)}
+            if value
+            else set()
+        )
 
     def copy_value(self, value):
         return set(value)
@@ -104,11 +106,7 @@ class Users(db.Model, UserMixin):
     def authenticate(cls, login, password):
         user = cls.query.filter(Users.email.ilike(login)).first()
 
-        if user:
-            authenticated = user.check_password(password)
-        else:
-            authenticated = False
-
+        authenticated = user.check_password(password) if user else False
         return user, authenticated
 
     @classmethod
@@ -119,7 +117,7 @@ class Users(db.Model, UserMixin):
         return Users.query.filter(Users.email == email).count() == 0
 
     def __unicode__(self):
-        _str = '%s. %s' % (self.id, self.name)
+        _str = f'{self.id}. {self.name}'
         return str(_str)
 
 

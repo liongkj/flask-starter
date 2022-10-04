@@ -21,6 +21,8 @@ class BaseConfig(object):
     SECRET_KEY = 'always-change-this-secret-key-with-random-alpha-nums'
 
 
+
+
 class DefaultConfig(BaseConfig):
 
     DEBUG = True
@@ -30,7 +32,7 @@ class DefaultConfig(BaseConfig):
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
     # SQLITE for production
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///' + INSTANCE_FOLDER_PATH + '/db.sqlite'
+    SQLALCHEMY_DATABASE_URI = f'sqlite:///{INSTANCE_FOLDER_PATH}/db.sqlite'
 
     # POSTGRESQL for production
     # SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://postgres:pass@ip/dbname'
