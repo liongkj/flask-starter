@@ -112,7 +112,11 @@ def signup():
 
         confirm_user_mail(form.name.data, form.email.data)
 
-        flash(u'Confirmation email sent to ' + form.email.data + ' Please verify!', 'success')
+        flash(
+            f'Confirmation email sent to {form.email.data} Please verify!',
+            'success',
+        )
+
         return redirect(url_for('frontend.login'))
 
     return render_template('frontend/signup.html', form=form,
@@ -147,9 +151,8 @@ def confirm_account(secretstring):
 @frontend.route('/change_password', methods=['GET', 'POST'])
 def change_password():
 
-    if current_user.is_authenticated:
-        if not login_fresh():
-            return login_manager.needs_refresh()
+    if current_user.is_authenticated and not login_fresh():
+        return login_manager.needs_refresh()
 
     form = ChangePasswordForm(email_activation_key=request.values["email_activation_key"],
                               email=request.values["email"])
@@ -175,9 +178,9 @@ def reset_password():
     form = RecoverPasswordForm()
 
     if form.validate_on_submit():
-        user = Users.query.filter(Users.email.ilike(form.email.data)).first()
-
-        if user:
+        if user := Users.query.filter(
+            Users.email.ilike(form.email.data)
+        ).first():
             flash('Please see your email for instructions on how to access your account', 'success')
 
             user.email_activation_key = str(uuid4())
